@@ -47,7 +47,7 @@ def menuMetaHeuristics():
     choice = int(input("Opção: "))
     util.line()
 
-def menuConstructiveMethods(dimension, distances):
+def menuConstructiveMethods(dimension, distances, solution):
 
     util.line()
     print("Métodos construtivos:")
@@ -61,17 +61,15 @@ def menuConstructiveMethods(dimension, distances):
     choice = int(input("Opção: "))
     util.line()
     
-    solution = []
-
     if choice == 0:
-        return []
+        return solution
     elif choice == 1:
         solution = constructive.createRandom(dimension)
     elif choice == 2:
-        solution = constructive.nearestNeighborhood(dimension, distances)
+        solution = constructive.nearestNeighbour(dimension, distances)
     elif choice == 3:
         alpha = float(input("Informe um valor para alpha [0; 1]: "))
-        solution = constructive.semiGreedyNearNeighborhood(dimension, distances, alpha)
+        solution = constructive.semiGreedyNearNeighbour(dimension, distances, alpha)
     else:
         print("Metodo ainda não implementado.")
 
@@ -104,7 +102,7 @@ def menu(name, dimension, distances):
             print("The end.")
             sys.exit(0)
         elif choice == 1:
-            solution = menuConstructiveMethods(dimension, distances)
+            solution = menuConstructiveMethods(dimension, distances, solution)
         elif choice == 2:
             solution = menuRefiningHeuristics(dimension, distances, solution)
         elif choice == 3:

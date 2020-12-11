@@ -11,13 +11,50 @@ def createRandom(dimension):
 
     return solution
 
-def nearestNeighborhood(dimension, distances):
-    return createSolution(dimension, distances, 0.0)
+def nearestNeighbour(dimension, distances):
 
-def semiGreedyNearNeighborhood(dimension, distances, alpha):
-    return createSolution(dimension, distances, alpha)
+    solution = []
+    # An array to control inserted customers
+    control = np.zeros(dimension, dtype=int)    
 
-def createSolution(dimension, distances, alpha):
+    # the first customer is randomly selected
+    solution.append(random.randint(1, dimension))
+
+    # Update control
+    control[ solution[0] - 1 ] = 1
+
+    for i in range(dimension - 1):
+        closestCustomer = -1
+        closestDistance = sys.maxsize
+
+        # Current customer
+        current = solution[i] - 1
+        # Get the closest distance from current customer
+        for j in range(dimension):
+
+            # If the current customer and the candidate are different
+            # AND the candidate is avalable    
+            if i != j and control[j] == 0:                
+                # Distance from current customer to candidate
+                dist = distances[current, j]
+
+                if dist < closestDistance:
+                    closestCustomer = j
+                    closestDistance = dist
+
+        # Add closest customer to solution
+        solution.append(closestCustomer + 1)
+        # Update control
+        control[ closestCustomer ] = 1
+
+    # print(control)
+
+    return solution
+
+def semiGreedyNearNeighbour(dimension, distances, alpha):
+    return createSolutionScarryVersion(dimension, distances, alpha)
+
+def createSolutionScarryVersion(dimension, distances, alpha):
 
     solution = []
 
@@ -50,5 +87,5 @@ def test():
     dimension = 5
     distances = np.random.randint(low=10,high=30, size=(dimension,dimension))
     print(distances)
-    solution = nearestNeighborhood(dimension, distances)
+    solution = nearestNeighbour(dimension, distances)
     print(solution)
