@@ -1,5 +1,5 @@
 import math
-import numpy
+import numpy as np
 
 def readTSPLibFiles(sourceFile):
     print("Reading files...")
@@ -21,7 +21,7 @@ def readTSPLibFiles(sourceFile):
         # DIMENSION:        
         elif i == 3:
             dimension = int(ln[ len(ln) - 1 ])
-            points = numpy.zeros(shape=(dimension, 3))
+            points = np.zeros(shape=(dimension, 3))
         elif i > 5:
 
             if ln[0] == "EOF":
@@ -49,7 +49,7 @@ def readTSPLibFiles(sourceFile):
 
 
 def calculateDistances(dimension, points):
-    distances = numpy.zeros(shape=(dimension, dimension))
+    distances = np.zeros(shape=(dimension, dimension))
 
     for i in range(dimension):
         for j in range(dimension):

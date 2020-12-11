@@ -1,0 +1,2 @@
+import constructive
+constructive.test()
