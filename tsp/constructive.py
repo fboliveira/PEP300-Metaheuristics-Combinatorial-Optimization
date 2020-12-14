@@ -25,13 +25,12 @@ def nearestNeighbour(dimension, distances):
 
     for i in range(dimension - 1):
         closestCustomer = -1
-        closestDistance = sys.maxsize
+        closestDistance = sys.maxsize # Inf
 
         # Current customer
         current = solution[i] - 1
         # Get the closest distance from current customer
         for j in range(dimension):
-
             # If the current customer and the candidate are different
             # AND the candidate is avalable    
             if i != j and control[j] == 0:                

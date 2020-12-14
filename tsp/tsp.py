@@ -9,6 +9,8 @@ TSP application
 import sys
 import problem
 import constructive
+import refining
+import multistart
 import util
 
 def menuRefiningHeuristics(dimension, distances, solution):
@@ -18,17 +20,33 @@ def menuRefiningHeuristics(dimension, distances, solution):
 
     print("1 - First improvement descent")
     print("2 - Best improvement descent")
-    print("3 - Random improvement descent")
+    print("3 - Random descent")
     print("0 - Voltar")
-
 
     choice = int(input("Opção: "))
     util.line()
 
-    return solution
+    if choice == 1:
+        solution, cost = refining.firstImprovementDescent(dimension, distances, solution)
+        print("Solução: ", solution)
+        print("Custo: ", cost)
+    elif choice == 2:
+        solution, cost = refining.bestImprovementDescent(dimension, distances, solution)
+        print("Solução: ", solution)
+        print("Custo: ", cost)
+    elif choice == 3:
 
+        iterMax = int(input("Defina o número máximo de iterações sem melhora: "))
+        solution, cost = refining.randomDescent(dimension, distances, solution, iterMax)
 
-def menuMetaHeuristics():
+        print("Solução: ", solution)
+        print("Custo: ", cost)
+    else:
+        print("Metodo ainda não implementado.")
+    
+    return solution, cost 
+
+def menuMetaHeuristics(dimension, distances):
     util.line()
     print("Meta-heurísticas:")
     util.line("-")
@@ -46,6 +64,13 @@ def menuMetaHeuristics():
 
     choice = int(input("Opção: "))
     util.line()
+
+    solution = []
+    cost = sys.maxsize
+
+    print("Metodo ainda não implementado.")
+
+    return solution, cost
 
 def menuConstructiveMethods(dimension, distances, solution):
 
@@ -104,9 +129,9 @@ def menu(name, dimension, distances):
         elif choice == 1:
             solution = menuConstructiveMethods(dimension, distances, solution)
         elif choice == 2:
-            solution = menuRefiningHeuristics(dimension, distances, solution)
+            solution, cost = menuRefiningHeuristics(dimension, distances, solution)
         elif choice == 3:
-            menuMetaHeuristics()
+            solution, cost = menuMetaHeuristics(dimension, distances)
         elif choice == 4:
             print("Solução: ", solution)
             cost = problem.calculateCost(solution, distances)
