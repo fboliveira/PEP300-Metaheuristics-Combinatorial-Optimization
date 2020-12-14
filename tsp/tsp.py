@@ -68,7 +68,15 @@ def menuMetaHeuristics(dimension, distances):
     solution = []
     cost = sys.maxsize
 
-    print("Metodo ainda não implementado.")
+    if choice == 1:
+        iterMax = int(input("Defina o número máximo de iterações sem melhora (critério de parada): "))
+
+        solution, cost = multistart.multiStart(dimension, distances, iterMax)
+
+        print("Solução: ", solution)
+        print("Custo: ", cost)
+    else:
+        print("Metodo ainda não implementado.")
 
     return solution, cost
 

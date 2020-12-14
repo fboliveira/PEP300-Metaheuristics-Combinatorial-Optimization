@@ -19,7 +19,7 @@ def firstImprovementDescent(dimension, distances, solution):
 
                 if neighbourCost < cost:
                     # Move to the neighbour
-                    print("Melhora: de ", cost, " para ", neighbourCost)
+                    # print("Melhora: de ", cost, " para ", neighbourCost)
                     cost = neighbourCost
                     improvement = True
                     break

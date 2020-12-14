@@ -5,7 +5,7 @@ import copy
 
 def createRandom(dimension):
 
-    print("Construção aleatória - dimensão: ", dimension)
+    # print("Construção aleatória - dimensão: ", dimension)
     solution = [*range(1, dimension + 1)] # [inicial, final[
     random.shuffle(solution)
 
