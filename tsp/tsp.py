@@ -11,6 +11,7 @@ import problem
 import constructive
 import refining
 import multistart
+import grasp
 import util
 
 def menuRefiningHeuristics(dimension, distances, solution):
@@ -68,10 +69,19 @@ def menuMetaHeuristics(dimension, distances):
     solution = []
     cost = sys.maxsize
 
-    if choice == 1:
+    if choice == 1: # Multi-start
         iterMax = int(input("Defina o número máximo de iterações sem melhora (critério de parada): "))
 
         solution, cost = multistart.multiStart(dimension, distances, iterMax)
+
+        print("Solução: ", solution)
+        print("Custo: ", cost)
+
+    elif choice == 2: # GRASP
+
+        graspMax = int(input("Defina o número máximo de iterações (GRASPmax): "))
+        alpha = float(input("Informe um valor para alpha [0; 1]: "))
+        solution, cost = grasp.grasp(dimension, distances, graspMax, alpha)
 
         print("Solução: ", solution)
         print("Custo: ", cost)

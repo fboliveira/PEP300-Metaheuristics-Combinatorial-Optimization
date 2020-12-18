@@ -81,10 +81,63 @@ def createSolutionScarryVersion(dimension, distances, alpha):
 
     return solution
 
+def semiGreedyNearNeighbourDistance(dimension, distances, alpha):
+
+    solution = []
+
+    # An array to define the candidate customers
+    candidate = [*range(1, dimension + 1)]
+
+    # the first customer is randomly selected
+    solution.append(random.randint(1, dimension))
+
+    # Update candidates
+    candidate.remove(solution[0])
+
+    while(len(candidate) > 0):
+        # Define gmin and gmax
+        # Replace the code by min() and max() for lists or numpy.minimum(): https://numpy.org/doc/stable/reference/generated/numpy.minimum.html for a numpy array.
+        gmin = sys.maxsize # Inf
+        gmax = -sys.maxsize # -Inf
+
+        # Last city (index)
+        i = solution[len(solution) - 1] - 1
+
+        # For each candidate t
+        for t in candidate:
+            # g(t) = dti, in which i is the last city.
+            if i != (t - 1):
+                if distances[i][t - 1] < gmin:
+                    gmin = distances[i][t - 1]
+                
+                if distances[i][t - 1] > gmax:
+                    gmax = distances[i][t - 1]
+
+        gtValue = gmin + alpha * ( gmax - gmin )
+
+        lrc = []
+        # For each candidate t
+        for t in candidate:
+            if i != (t - 1) and distances[i][t - 1] <= gtValue:
+                lrc.append(t)
+
+        # print(lrc)
+        # Select the candidate randomly - index
+        choice = random.randint(0, len(lrc) - 1)
+        # print(choice)
+
+        # Insert the candidate into solution
+        solution.append(lrc[choice])
+
+        # Update the candidate list
+        candidate.remove(lrc[choice])
+
+    return solution
+
 def test():
 
     dimension = 5
     distances = np.random.randint(low=10,high=30, size=(dimension,dimension))
     print(distances)
-    solution = nearestNeighbour(dimension, distances)
+    solution = semiGreedyNearNeighbourDistance(dimension, distances,0.3)
     print(solution)
