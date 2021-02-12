@@ -43,7 +43,7 @@ def readTSPLibFiles(sourceFile):
     distances = calculateDistances(dimension, points)
 
     # print("Distances", distances)
-
+    data.close()
 
     return name, dimension, distances
 
@@ -81,3 +81,7 @@ def calculateCost(solution, distance):
     cost += distance[solution[ len(solution) - 1 ] - 1][solution[0] - 1]
 
     return cost
+
+def gap(cost, bestValue):
+
+    return (( cost - bestValue ) / bestValue) * 100.0
